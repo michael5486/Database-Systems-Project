@@ -1,0 +1,45 @@
+set up git for everyone
+	paul and I have it working, mine was a pain in the butt :(
+
+	To push:
+	git add .
+	git commit -m "insert message here"
+	git push
+
+	To pull: 
+	git pull
+
+	Reminder: you have to pull the latest changes before you can push.
+	Also if we are working on the same file simultaneously things can get weird, so let's try not to do that
+
+
+we asked Tong what the best way of creating a database-driven website was...
+he said we should use Yii
+	http://www.yiiframework.com/
+So I guess the next step is we all download this thing, play around with it in the tutorials, and get it to integrate with NetBeans
+
+Tong said he likes using NetBeans the best...I've never really done webdevelopment so I'm gonna download it and figure out how to use it...but whatever IDE you want to use is a personal choice
+
+We all need a local version of Apache Webserver running
+	http://www.apache.org/
+
+Soooo, from here we should probably figure out what we want to do on the website?
+	1. How do we want it to look?
+	2. What features do we give it?
+	3. What's our menu?
+
+	Things like that
+
+It's due April 27th, so we've got:
+2/24
+3/2
+3/9
+3/16
+3/23
+3/30
+4/6
+4/13
+4/20 blazeit
+4/27
+
+10 weeks, not bad
