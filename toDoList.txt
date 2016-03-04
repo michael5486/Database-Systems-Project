@@ -43,3 +43,9 @@ It's due April 27th, so we've got:
 4/27
 
 10 weeks, not bad
+
+
+----------NOTES-------
+
+using yii 1
+figure out how to connect it to mysql
