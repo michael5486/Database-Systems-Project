@@ -4,10 +4,17 @@
         <title>jQuery Test Project</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-2.2.1.js"></script>
-        <link rel="shortcut icon" href="favicon.ico">
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
 
+        <link rel="shortcut icon" href="favicon.ico">
+        
         <script type="text/javascript">
             $(document).ready(function(){
+                
+                $("#infolist").accordion({
+                autoHeight: false
+                });
                 $("h1").click(function(){
                     $(this).addClass("blue").fadeOut("slow");
 });
