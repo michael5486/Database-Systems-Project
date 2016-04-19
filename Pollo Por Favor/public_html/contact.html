@@ -6,7 +6,7 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>About Us</title>
+        <title>Contact Us</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script type="text/javascript" src="js/jquery-2.2.1.js"></script>
         <script type="text/javascript" src="js/jquery-ui.js"></script>
@@ -44,5 +44,49 @@ and open the template in the editor.
         </ul>
     </div>
    
+    <!Script segment from http://www.w3schools.com/googleapi/google_maps_overlays.asp>
+    <script  src="http://maps.googleapis.com/maps/api/js"> </script>
+    <script>
+    var myCenter=new google.maps.LatLng(+38.9001354,-77.0507779);
+
+    function initialize() {
+    var mapProp = {
+        center:myCenter,
+        zoom:15,
+        mapTypeId:google.maps.MapTypeId.ROADMAP
+    };
+
+    var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+    var marker=new google.maps.Marker({
+        position:myCenter,
+    });
+
+    marker.setMap(map);
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+    
+    <div id="wrapper2">
+	<div id="info" class="container">
+            <p> <strong>Hours: </strong>  Sunday - Thursday  ......... 11:00 AM - 9:00 PM <br>
+            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Friday - Saturday ............ 11:00 AM - 2:00 AM  </p>
+            
+            <p> <strong>Phone Number: </strong> (203) 994-CHXN </p>
+            
+            <p> <strong>Email: </strong> info@polloporfavor.com </p>
+            
+            <p> <strong>Address: </strong> 800 23rd Street NW  <br>
+             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Washington, D.C. 20052</p>
+            
+            <div id="googleMap" style="width:500px;height:380px;"></div>
+            
+	</div>
+       
+        
+    </div>
+
     </body>
+    
 </html>
