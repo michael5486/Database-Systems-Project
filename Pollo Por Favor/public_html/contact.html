@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>About Us</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery-2.2.1.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
+        <link href="css/fonts.css" rel="stylesheet" type="text/css" media="all">
+        <link href="css/default.css" rel="stylesheet" type="text/css" media="all">
+        <link rel="shortcut icon" href="favicon.ico">
+        
+        <script type="text/javascript">
+            $(document).ready(function(){
+                
+                $("#infolist").accordion({
+                autoHeight: false
+                });
+                $("h1").click(function(){
+                    $(this).addClass("blue").fadeOut("slow");
+});
+            });
+        </script>
+
+       <style type="text/css">
+            ul {list-style-type: none}
+            img {padding-right: 20px; float:left}
+            #infolist {width:500px}
+        </style>
+    </head>
+    <body>
+    <div id="menu">
+	<ul>
+            <li><a href="index.html" accesskey="1" title="">Home</a></li>
+            <li><a href="menu.pdf" accesskey="2" title="">Menu</a></li>
+            <li><a href="aboutUs.html" accesskey="3" title="">About Us</a></li>
+            <li class="current_page_item"><a href="#" accesskey="4" title="">Contact Us</a></li>
+            <li><a href="login.html" accesskey="5" title="">Login</a></li>
+        </ul>
+    </div>
+   
+    </body>
+</html>
