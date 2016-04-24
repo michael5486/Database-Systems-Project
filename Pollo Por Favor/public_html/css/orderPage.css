@@ -1,0 +1,74 @@
+#main {
+   float: left;
+    width: 100%;
+    background-color: #E0E0E0;
+ }
+
+#header {
+   background-color: #632F00;
+   color: #fff;
+ }
+ 
+ #sidebar {
+   float: left;
+   width: 13em;
+   padding: 0 0.5em;
+   background-color: #EDEDED;
+   margin-left: -14em;
+   position: relative;
+   left: 15em;
+ }
+ 
+ #nav {
+   float: left;
+   width: 11em;
+   padding: 0 0.5em;
+   background-color: #eb8f00;
+   margin-left: -100%;
+   position: relative;
+   right: 13em;
+   
+
+ }
+ 
+ #footer {
+   clear: left;
+   border-top: 1px solid #369;
+ }
+ 
+ #wrapper {
+   margin: 0 14em 0 12em;
+   padding: 0 1em;
+ }
+ 
+ body {
+   margin: 0 auto;
+   min-width: 40em;
+   max-width: 56em;
+   
+   	h1, h2, h3 {
+		margin: 0;
+		padding: 0;
+	}
+        
+        p {
+            margin-top: 0;
+        }
+ }
+ 
+ 
+ .subtotalDivider {
+    border: 3px #000000;
+    width:10px;
+    margin-left:10px;
+    margin-right:10px;
+}
+ 
+ .cartRatingsDivider {
+    border: 3px dotted #eb8f00;
+    width:10px;
+    margin-left:10px;
+    margin-right:10px;
+}
+
+ 
