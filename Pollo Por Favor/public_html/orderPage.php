@@ -1,15 +1,21 @@
 <?php
-   include('config.php');
+include('config.php');
 
-   session_start();
-   
-   $ses_dessert = mysqli_query($con,"select * from menu_items where food_type = 'Dessert' ");
-   
+session_start();
+
+$ses_breakfast = mysqli_query($con, "select * from menu_items where food_type = 'Breakfast' ");
+$ses_lunch = mysqli_query($con, "select * from menu_items where food_type = 'Lunch' ");
+$ses_dinner = mysqli_query($con, "select * from menu_items where food_type = 'Dinner' ");
+$ses_sides = mysqli_query($con, "select * from menu_items where food_type = 'Side' ");
+$ses_beverages = mysqli_query($con, "select * from menu_items where food_type = 'Beverage' ");
+$ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'Dessert' ");
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
     <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="orderPage.js"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>Order Now</title>
         <link rel="stylesheet" type="text/css" href="css/orderPage.css">
@@ -37,8 +43,8 @@
         </div>
 
         <div id="wrapper">
-            <div id="main">Main content
-                <table>
+            <div id="main">
+                <!---<table>
                     <tr>
                         <td class="col_orderPageNum">1. </td>
                         <td class="col_itemName">Item Name</td>    
@@ -59,18 +65,21 @@
 
                     </tr>                
                 </table>
-                <hr class="orderPageItemDivider">
+                <hr class="orderPageItemDivider">--->
 
                 <?php
-                $i=1;
-                //echo $login_session; 
-                for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
-                    //printf("%s", $row[1]);
-                echo "<table>
+                //Starting Breakfast List----------
+
+                echo "<div id='breakfastList'>";
+                $i = 1;
+                for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch_row($ses_breakfast)) {
+
+                    echo "
+                    <table>
                     <tr>
-                         <td class='col_orderPageNum'>".$i."</td>
-                         <td class='col_itemName'>".$row[1]."</td> 
-                         <td class='col_description'>".$row[4]."</td> 
+                         <td class='col_orderPageNum'>" . $i . "</td>
+                         <td class='col_itemName'>" . $row[1] . "</td> 
+                         <td class='col_description'>" . $row[4] . "</td> 
                          <td class='col_quantity'>Quantity</td>
                          <td class='col_rating'>Rating</td>                     
                     </tr>
@@ -79,7 +88,7 @@
                         <td class='col_itemName'>
                             <button type='button'>Add to Cart</button>
                         </td>
-                        <td class='col_description'>".$row[2]."</td>    
+                        <td class='col_description'>" . $row[2] . "</td>    
                         <td class='col_quantity'>
                             <input type='number' name='quantity' min='1' max='10'>
                         </td>    
@@ -88,62 +97,174 @@
                     </tr>                
                 </table>
                 <hr class='orderPageItemDivider'> ";
-                $i++;    
+                    $i++;
                 }
-                    
 
-                ?>
+                echo "</div>";
 
-                    <!---<table>
+                //Starting LunchList----------
+
+                echo "<div id='lunchList'>";
+                for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row($ses_lunch)) {
+                    echo "
+                    <table>
                     <tr>
-                        <td class="col_orderPageNum">2. </td>
-                        <td class="col_itemName">Lemon Herb Chicken</td>    
-                        <td class="col_description">Description</td>    
-                        <td class="col_quantity">Quantity</td>    
-                        <td class="col_rating">Rating</td>                       
+                         <td class='col_orderPageNum'>" . $i . "</td>
+                         <td class='col_itemName'>" . $row[1] . "</td> 
+                         <td class='col_description'>" . $row[4] . "</td> 
+                         <td class='col_quantity'>Quantity</td>
+                         <td class='col_rating'>Rating</td>                     
                     </tr>
                     <tr>
-                        <td class="col_orderPageNum"> </td>
-                        <td class="col_itemName">
-                            <button type="button">Add to Cart</button> 
+                        <td class='col_orderPageNum'> </td>
+                        <td class='col_itemName'>
+                            <button type='button'>Add to Cart</button>
                         </td>
-                        <td class="col_description">$6.99</td>    
-                        <td class="col_quantity">
-                            <input type="number" name="quantity" min="1" max="10">
-
+                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_quantity'>
+                            <input type='number' name='quantity' min='1' max='10'>
                         </td>    
-                        <td class="col_rating">*****</td>    
+                        <td class='col_rating'>*****</td>    
+
                     </tr>                
                 </table>
-                <hr class="orderPageItemDivider">--->
+                <hr class='orderPageItemDivider'> ";
+                    $i++;
+                }
 
+                echo "</div>";
+                
+               //Starting DinnerList------------
+                
+                echo "<div id='dinnerList'>";
+                for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_row($ses_dinner)) {
+                    echo "
+                    <table>
+                    <tr>
+                         <td class='col_orderPageNum'>" . $i . "</td>
+                         <td class='col_itemName'>" . $row[1] . "</td> 
+                         <td class='col_description'>" . $row[4] . "</td> 
+                         <td class='col_quantity'>Quantity</td>
+                         <td class='col_rating'>Rating</td>                     
+                    </tr>
+                    <tr>
+                        <td class='col_orderPageNum'> </td>
+                        <td class='col_itemName'>
+                            <button type='button'>Add to Cart</button>
+                        </td>
+                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_quantity'>
+                            <input type='number' name='quantity' min='1' max='10'>
+                        </td>    
+                        <td class='col_rating'>*****</td>    
 
+                    </tr>                
+                </table>
+                <hr class='orderPageItemDivider'> ";
+                    $i++;
+                }
 
+                echo "</div>";                
+
+               //Starting SidesList----------
+                
+                echo "<div id='sidesList'>";
+                for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row($ses_sides)) {
+                    echo "
+                    <table>
+                    <tr>
+                         <td class='col_orderPageNum'>" . $i . "</td>
+                         <td class='col_itemName'>" . $row[1] . "</td> 
+                         <td class='col_description'>" . $row[4] . "</td> 
+                         <td class='col_quantity'>Quantity</td>
+                         <td class='col_rating'>Rating</td>                     
+                    </tr>
+                    <tr>
+                        <td class='col_orderPageNum'> </td>
+                        <td class='col_itemName'>
+                            <button type='button'>Add to Cart</button>
+                        </td>
+                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_quantity'>
+                            <input type='number' name='quantity' min='1' max='10'>
+                        </td>    
+                        <td class='col_rating'>*****</td>    
+
+                    </tr>                
+                </table>
+                <hr class='orderPageItemDivider'> ";
+                    $i++;
+                }
+
+                echo "</div>";
+
+               //Starting BeveragesList-------------
+                
+                echo "<div id='beveragesList'>";
+                for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch_row($ses_beverages)) {
+                    echo "
+                    <table>
+                    <tr>
+                         <td class='col_orderPageNum'>" . $i . "</td>
+                         <td class='col_itemName'>" . $row[1] . "</td> 
+                         <td class='col_description'>" . $row[4] . "</td> 
+                         <td class='col_quantity'>Quantity</td>
+                         <td class='col_rating'>Rating</td>                     
+                    </tr>
+                    <tr>
+                        <td class='col_orderPageNum'> </td>
+                        <td class='col_itemName'>
+                            <button type='button'>Add to Cart</button>
+                        </td>
+                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_quantity'>
+                            <input type='number' name='quantity' min='1' max='10'>
+                        </td>    
+                        <td class='col_rating'>*****</td>    
+
+                    </tr>                
+                </table>
+                <hr class='orderPageItemDivider'> ";
+                    $i++;
+                }
+
+                echo "</div>";                
+                
+                //Starting DessertList
+
+                echo "<div id='dessertList'>";
+                for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
+                    echo "
+                    <table>
+                    <tr>
+                         <td class='col_orderPageNum'>" . $i . "</td>
+                         <td class='col_itemName'>" . $row[1] . "</td> 
+                         <td class='col_description'>" . $row[4] . "</td> 
+                         <td class='col_quantity'>Quantity</td>
+                         <td class='col_rating'>Rating</td>                     
+                    </tr>
+                    <tr>
+                        <td class='col_orderPageNum'> </td>
+                        <td class='col_itemName'>
+                            <button type='button'>Add to Cart</button>
+                        </td>
+                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_quantity'>
+                            <input type='number' name='quantity' min='1' max='10'>
+                        </td>    
+                        <td class='col_rating'>*****</td>    
+
+                    </tr>                
+                </table>
+                <hr class='orderPageItemDivider'> ";
+                    $i++;
+                }
+
+                echo "</div>";
+                ?>
 
             </div>
 
-            <div id="sidebar">
-                <div id="cart">
-                    <p>Your Cart</p>
-                    <p>Subtotal: $0.00</p>
-                    <p>Tax: $0.00
-                    <hr class="subtotalDivider">
-                    <p>Total: $100.00
-
-                    <hr class="cartRatingsDivider">
-                </div>
-                <div id="ratings">
-                    <p> Top-Rated Items</p>
-                    <p>1. Lemon-Herb Chicken</p>
-                    <p>2. Pisco</p>
-                    <p>3. Churros</p>
-                    <p>4. Tres Leches</p>
-                    <p>5. Hot Chocolate</p>
-
-
-                </div>
-
-            </div>
 
             <div id="sidebar">
                 <div id="cart">
@@ -177,12 +298,12 @@
             <div id="nav">
                 <br>
                 <br>
-                <p>Breakfast</p>
-                <p>Lunch</p>
-                <p>Dinner</p>
-                <p>Sides</p>
-                <p>Beverages</p>
-                <p>Dessert</p>
+                <p id="breakfastNav">Breakfast</p>
+                <p id="lunchNav">Lunch</p>
+                <p id="dinnerNav">Dinner</p>
+                <p id="sidesNav">Sides</p>
+                <p id="beveragesNav">Beverages</p>
+                <p id="dessertNav">Dessert</p>
 
             </div>
         </div>
