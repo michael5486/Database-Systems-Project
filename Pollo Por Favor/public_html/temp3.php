@@ -6,13 +6,6 @@
    $ses_dessert = mysqli_query($con,"select * from menu_items where food_type = 'Dessert' ");
    $ses_dinner = mysqli_query($con,"select * from menu_items where food_type = 'Dinner' ");
    
-  // $row = mysqli_fetch_row($ses_sql);
-   // mysqli_fetch_array
-   
-   //$login_session = $row['item_name'];
-  
-   
-   
 ?>
 
 

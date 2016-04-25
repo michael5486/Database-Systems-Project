@@ -1,3 +1,12 @@
+<?php
+   include('config.php');
+
+   session_start();
+   
+   $ses_dessert = mysqli_query($con,"select * from menu_items where food_type = 'Dessert' ");
+   
+?>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
     <head>
@@ -51,7 +60,41 @@
                     </tr>                
                 </table>
                 <hr class="orderPageItemDivider">
-                <table>
+
+                <?php
+                $i=1;
+                //echo $login_session; 
+                for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
+                    //printf("%s", $row[1]);
+                echo "<table>
+                    <tr>
+                         <td class='col_orderPageNum'>".$i."</td>
+                         <td class='col_itemName'>".$row[1]."</td> 
+                         <td class='col_description'>".$row[4]."</td> 
+                         <td class='col_quantity'>Quantity</td>
+                         <td class='col_rating'>Rating</td>                     
+                    </tr>
+                    <tr>
+                        <td class='col_orderPageNum'> </td>
+                        <td class='col_itemName'>
+                            <button type='button'>Add to Cart</button>
+                        </td>
+                        <td class='col_description'>".$row[2]."</td>    
+                        <td class='col_quantity'>
+                            <input type='number' name='quantity' min='1' max='10'>
+                        </td>    
+                        <td class='col_rating'>*****</td>    
+
+                    </tr>                
+                </table>
+                <hr class='orderPageItemDivider'> ";
+                $i++;    
+                }
+                    
+
+                ?>
+
+                    <!---<table>
                     <tr>
                         <td class="col_orderPageNum">2. </td>
                         <td class="col_itemName">Lemon Herb Chicken</td>    
@@ -72,7 +115,10 @@
                         <td class="col_rating">*****</td>    
                     </tr>                
                 </table>
-                <hr class="orderPageItemDivider">
+                <hr class="orderPageItemDivider">--->
+
+
+
 
             </div>
 
