@@ -31,11 +31,6 @@
 
  }
  
- #footer {
-   clear: left;
-   border-top: 1px solid #369;
- }
- 
  #wrapper {
    margin: 0 14em 0 12em;
    padding: 0 1em;
@@ -95,5 +90,21 @@
 
 .col_rating {
     width:15%;
+}
+
+.col_header_logo {
+ width:10%;
+}
+
+.col_header_address {
+    width:50%;
+}
+
+.col_header_username {
+    width:40%;
+}
+
+.header_table {
+    padding:0px;
 }
  
