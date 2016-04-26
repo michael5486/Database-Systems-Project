@@ -1,191 +1,72 @@
 <?php
-   include('config.php');
+ 
+include 'config.php';
+session_start();
+ 
+if(isset($_SESSION['username'])!="")
+{
+  header("location: temp.php");
+}
+ 
+ 
+if(isset($_POST['submit']))
+{
+    $sql2 = "INSERT INTO address (city, state, street, username, zip_code) VALUES ('".$_POST["city"]."','".$_POST["state"]."','".$_POST["street"]."','".$_POST["username"]."','".$_POST["zip_code"]."')";
+    mysqli_query($con, $sql2);
+    $sql = "INSERT INTO user (username, password) VALUES ('".$_POST["username"]."','".$_POST["password"]."')";
+    if (mysqli_query($con, $sql))  
+  {
+        $_SESSION['username'] = $_POST["username"];
+        header("location: login2.php");
+    }
+    } 
+  else
+  {
+        echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    }
 
-   session_start();
-   
-   $ses_dessert = mysqli_query($con,"select * from menu_items where food_type = 'Dessert' ");
-   
 ?>
+ 
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
+<html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Order Now</title>
-        <link rel="stylesheet" type="text/css" href="css/orderPage.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>Login</title>
+        <link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900" rel="stylesheet" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+        <link href="css/login.css" rel="stylesheet" type="text/css" media="all" />
+        <link href="css/fonts.css" rel="stylesheet" type="text/css" media="all" />
     </head>
     <body>
-        <div id="header">
-            <table class="header_table">
-                <tr>
-                    <td class="col_header_logo"> 
-                        <a href="index.html">
-                            <img src="pix/PPF_logo.png" alt="Pollo Por Favor logo" width="80" height="80">
-                        </a>
-                    </td>
-                    <td class="col_header_address">
-                        <p>2140 L Street, NW
-                            <br>
-                            Washington, DC 20037<p>        
-                    </td>
-                    <td class="col_header_username">
-                        <p>Username</p>
-                    </td>
-                </tr>
-            </table>
-            <br>
+
+        <div id="menu">
+            <ul>
+                <li><a href="index.html" accesskey="1" title="">Home</a></li>
+                <li><a href="menu.pdf" accesskey="2" title="">Menu</a></li>
+                <li><a href="aboutUs.html" accesskey="3" title="">About Us</a></li>
+                <li><a href="contact.html" accesskey="4" title="">Contact Us</a></li>
+                <li  class="current_page_item"><a href="login2.php" accesskey="5" title="">Login</a></li>
+            </ul>
         </div>
-
-        <div id="wrapper">
-            <div id="main">Main content
-                <table>
-                    <tr>
-                        <td class="col_orderPageNum">1. </td>
-                        <td class="col_itemName">Item Name</td>    
-                        <td class="col_description">Description</td>    
-                        <td class="col_quantity">Quantity</td>    
-                        <td class="col_rating">Rating</td>                       
-                    </tr>
-                    <tr>
-                        <td class="col_orderPageNum"> </td>
-                        <td class="col_itemName">
-                            <button type="button">Add to Cart</button> 
-                        </td>
-                        <td class="col_description">Price</td>    
-                        <td class="col_quantity">
-                            <input type="number" name="quantity" min="1" max="10">
-                        </td>    
-                        <td class="col_rating">*****</td>    
-
-                    </tr>                
-                </table>
-                <hr class="orderPageItemDivider">
-
-                <?php
-                $i=1;
-                //echo $login_session; 
-                for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
-                    //printf("%s", $row[1]);
-                echo "<table>
-                    <tr>
-                         <td class='col_orderPageNum'>".$i."</td>
-                         <td class='col_itemName'>".$row[1]."</td> 
-                         <td class='col_description'>".$row[4]."</td> 
-                         <td class='col_quantity'>Quantity</td>
-                         <td class='col_rating'>Rating</td>                     
-                    </tr>
-                    <tr>
-                        <td class='col_orderPageNum'> </td>
-                        <td class='col_itemName'>
-                            <button type='button'>Add to Cart</button>
-                        </td>
-                        <td class='col_description'>".$row[2]."</td>    
-                        <td class='col_quantity'>
-                            <input type='number' name='quantity' min='1' max='10'>
-                        </td>    
-                        <td class='col_rating'>*****</td>    
-
-                    </tr>                
-                </table>
-                <hr class='orderPageItemDivider'> ";
-                $i++;    
-                }
-                    
-
-                ?>
-
-                    <!---<table>
-                    <tr>
-                        <td class="col_orderPageNum">2. </td>
-                        <td class="col_itemName">Lemon Herb Chicken</td>    
-                        <td class="col_description">Description</td>    
-                        <td class="col_quantity">Quantity</td>    
-                        <td class="col_rating">Rating</td>                       
-                    </tr>
-                    <tr>
-                        <td class="col_orderPageNum"> </td>
-                        <td class="col_itemName">
-                            <button type="button">Add to Cart</button> 
-                        </td>
-                        <td class="col_description">$6.99</td>    
-                        <td class="col_quantity">
-                            <input type="number" name="quantity" min="1" max="10">
-
-                        </td>    
-                        <td class="col_rating">*****</td>    
-                    </tr>                
-                </table>
-                <hr class="orderPageItemDivider">--->
-
-
-
-
-            </div>
-
-            <div id="sidebar">
-                <div id="cart">
-                    <p>Your Cart</p>
-                    <p>Subtotal: $0.00</p>
-                    <p>Tax: $0.00
-                    <hr class="subtotalDivider">
-                    <p>Total: $100.00
-
-                    <hr class="cartRatingsDivider">
-                </div>
-                <div id="ratings">
-                    <p> Top-Rated Items</p>
-                    <p>1. Lemon-Herb Chicken</p>
-                    <p>2. Pisco</p>
-                    <p>3. Churros</p>
-                    <p>4. Tres Leches</p>
-                    <p>5. Hot Chocolate</p>
-
-
-                </div>
-
-            </div>
-
-            <div id="sidebar">
-                <div id="cart">
-                    <p>Your Cart</p>
-                    <p>Subtotal: $0.00</p>
-                    <p>Tax: $0.00
-                    <p>Tip: <input type="number" step="0.01" min="0">
-                    </p>   
-                    <hr class="subtotalDivider">
-                    <p>Total: $100.00
-                        <br>
-                        <br>
-                        <button type="button">Checkout</button> 
-
-
-                    <hr class="cartRatingsDivider">
-                </div>
-                <div id="ratings">
-                    <p> Top-Rated Items</p>
-                    <p>1. Lemon-Herb Chicken</p>
-                    <p>2. Pisco</p>
-                    <p>3. Churros</p>
-                    <p>4. Tres Leches</p>
-                    <p>5. Hot Chocolate</p>
-
-
-                </div>
-
-            </div>
-
-            <div id="nav">
-                <br>
-                <br>
-                <p>Breakfast</p>
-                <p>Lunch</p>
-                <p>Dinner</p>
-                <p>Sides</p>
-                <p>Beverages</p>
-                <p>Dessert</p>
-
-            </div>
+        <div class="login-page">
+			<div class="form">	
+                <form class="login-form" action="register2.php" method="post" >
+					<input type = "text" name = "username" required="required" placeholder="username" class = "box"/><br/>
+					<input type = "password" name = "password" required="required" placeholder="password" class = "box" /><br/>
+                                        <input type ="text" name= "city" required="required" placeholder="city" class = "box"/><br/>
+                                        <input type ="text" name= "state" required="required" placeholder="state" class = "box"/><br/>
+                                        <input type ="text" name= "street" required ="required" placeholder ="street" class ="box"/><br/>
+                                        <input type = "text" name = "zip_code" required =" required" placeholder = "zip code" class ="box"/><br/>
+					<input type="submit" name= "submit" value="Submit"/><br />
+					<p class="message">Already registered? <a href="http://52.70.106.129/login2.php">Sign in.</a></p>
+				</form>   
+			</div>	
         </div>
-
+        
     </body>
+    <script>
+        $('.message a').click(function () {
+            $('form').animate({height: "toggle", opacity: "toggle"}, "slow");
+        });
+    </script>
 </html>

@@ -11,7 +11,6 @@ if(isset($_SESSION['username'])!="")
  
 if(isset($_POST['submit']))
 {
-    $sql = "INSERT INTO address (city, state, street, username, zip_code) VALUES ('".$_POST["city"]."','".$_POST["state"]."','".$_POST["street"]."','".$_POST["username"]."','".$_POST["zip_code"]."')";
     $sql = "INSERT INTO user (username, password) VALUES ('".$_POST["username"]."','".$_POST["password"]."')";
     if (mysqli_query($con, $sql)) 
   {
@@ -52,10 +51,6 @@ if(isset($_POST['submit']))
                 <form class="login-form" action="register2.php" method="post" >
 					<input type = "text" name = "username" required="required" placeholder="username" class = "box"/><br/>
 					<input type = "password" name = "password" required="required" placeholder="password" class = "box" /><br/>
-                                        <input type ="text" name= "city" required="required" placeholder="city" class = "box"/><br/>
-                                        <input type ="text" name= "state" required="required" placeholder="state" class = "box"/><br/>
-                                        <input type ="text" name= "street" required ="required" placeholder ="street" class ="box"/><br/>
-                                        <input type = "text" name = "zip_code" required =" required" placeholder = "zip code" class ="box"/><br/>
 					<input type="submit" name= "submit" value="Submit"/><br />
 					<p class="message">Already registered? <a href="http://52.70.106.129/login2.php">Sign in.</a></p>
 				</form>   
