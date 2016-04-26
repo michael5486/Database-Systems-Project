@@ -33,6 +33,6 @@ and open the template in the editor.
         </div>
     </head>
     <body>
-        <div>TODO write content</div>
+        <div>Order was successful</div>
     </body>
 </html>
