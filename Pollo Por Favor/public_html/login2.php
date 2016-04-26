@@ -4,7 +4,7 @@ session_start();
 
 if(isset($_SESSION['username'])!="")
 {
-  header("location: temp.php");
+  header("location: testOrderPage.php");
 }
 
 if (mysqli_connect_errno())
@@ -24,7 +24,7 @@ if(isset($_POST['login']))
 
    if($check_user>0){
       $_SESSION['username']=$username;
-      echo "<script>window.open('temp.php','_self')</script>";
+      echo "<script>window.open('testOrderPage.php','_self')</script>";
    }
    else {
       echo "<script>alert('Email or password is not correct, try again!')</script>";

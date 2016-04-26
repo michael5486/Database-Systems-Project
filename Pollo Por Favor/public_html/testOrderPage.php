@@ -3,6 +3,16 @@ include('config.php');
 
 session_start();
 
+   $ses_sql = mysqli_query($con,"select username from user where username = '".$_SESSION["username"]."' ");
+   
+   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
+   
+   $login_session = $row['username'];
+   
+   if(!isset($_SESSION['username'])){
+      header("location:login2.php");
+   }
+
 $ses_breakfast = mysqli_query($con, "select * from menu_items where food_type = 'Breakfast'; ");
 $ses_lunch = mysqli_query($con, "select * from menu_items where food_type = 'Lunch'; ");
 $ses_dinner = mysqli_query($con, "select * from menu_items where food_type = 'Dinner'; ");
@@ -98,7 +108,9 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                             Washington, DC 20037<p>        
                     </td>
                     <td class="col_header_username">
-                        <p>Username</p>
+                        <p>Welcome, <?php echo $login_session; ?></p>
+                        <br>
+                        <a href="logout.php"><button type="button">Sign Out</button></a>
                     </td>
                 </tr>
             </table>
@@ -112,14 +124,13 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
 <?php
 //Starting Breakfast List----------
 
-echo "<div id='breakfastList'>";
-// $i = 1;
+echo "<div id='breakfastList'>Breakfast";
 for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch_row($ses_breakfast)) {
 
     echo "
-                        <form action='testOrderPage.php' method='post' target='_top'>
-                        <input type='hidden' name='itemID' value=" . $row[0] . ">
-                        <input type='hidden' name='price' value=" . $row[2] . ">
+                    <form action='testOrderPage.php' method='post' target='_top'>
+                    <input type='hidden' name='itemID' value=" . $row[0] . ">
+                    <input type='hidden' name='price' value=" . $row[2] . ">
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -144,16 +155,18 @@ for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch
                 </table>
                 </form>
                 <hr class='orderPageItemDivider'> ";
-    $i++;
 }
 
 echo "</div>";
 
 //Starting LunchList----------
 
-echo "<div id='lunchList'>";
+echo "<div id='lunchList'>Lunch";
 for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row($ses_lunch)) {
     echo "
+                    <form action='testOrderPage.php' method='post' target='_top'>
+                    <input type='hidden' name='itemID' value=" . $row[0] . ">
+                    <input type='hidden' name='price' value=" . $row[2] . ">
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -165,27 +178,31 @@ for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row
                     <tr>
                         <td class='col_orderPageNum'> </td>
                         <td class='col_itemName'>
-                            <button type='button'>Add to Cart</button>
+                            <input type='submit' name='add' value='Add to Cart'>
+                            <input type='submit' name='remove' value='Remove All'>
                         </td>
-                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_description'>$" . $row[2] . "</td>    
                         <td class='col_quantity'>
-                            <input type='number' name='quantity' min='1' max='10'>
+                            <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
                         <td class='col_rating'>*****</td>    
 
                     </tr>                
                 </table>
+                </form>
                 <hr class='orderPageItemDivider'> ";
-    $i++;
 }
 
 echo "</div>";
 
 //Starting DinnerList------------
 
-echo "<div id='dinnerList'>";
+echo "<div id='dinnerList'>Dinner";
 for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_row($ses_dinner)) {
     echo "
+                    <form action='testOrderPage.php' method='post' target='_top'>
+                    <input type='hidden' name='itemID' value=" . $row[0] . ">
+                    <input type='hidden' name='price' value=" . $row[2] . ">
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -197,27 +214,31 @@ for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_ro
                     <tr>
                         <td class='col_orderPageNum'> </td>
                         <td class='col_itemName'>
-                            <button type='button'>Add to Cart</button>
+                            <input type='submit' name='add' value='Add to Cart'>
+                            <input type='submit' name='remove' value='Remove All'>
                         </td>
-                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_description'>$" . $row[2] . "</td>    
                         <td class='col_quantity'>
-                            <input type='number' name='quantity' min='1' max='10'>
+                            <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
                         <td class='col_rating'>*****</td>    
 
                     </tr>                
                 </table>
+                </form>
                 <hr class='orderPageItemDivider'> ";
-    $i++;
 }
 
 echo "</div>";
 
 //Starting SidesList----------
 
-echo "<div id='sidesList'>";
+echo "<div id='sidesList'>Sides";
 for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row($ses_sides)) {
     echo "
+                    <form action='testOrderPage.php' method='post' target='_top'>
+                    <input type='hidden' name='itemID' value=" . $row[0] . ">
+                    <input type='hidden' name='price' value=" . $row[2] . ">
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -229,27 +250,31 @@ for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row
                     <tr>
                         <td class='col_orderPageNum'> </td>
                         <td class='col_itemName'>
-                            <button type='button'>Add to Cart</button>
+                            <input type='submit' name='add' value='Add to Cart'>
+                            <input type='submit' name='remove' value='Remove All'>
                         </td>
-                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_description'>$" . $row[2] . "</td>    
                         <td class='col_quantity'>
-                            <input type='number' name='quantity' min='1' max='10'>
+                            <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
                         <td class='col_rating'>*****</td>    
 
                     </tr>                
                 </table>
+                </form>
                 <hr class='orderPageItemDivider'> ";
-    $i++;
 }
 
 echo "</div>";
 
 //Starting BeveragesList-------------
 
-echo "<div id='beveragesList'>";
+echo "<div id='beveragesList'>Beverages";
 for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch_row($ses_beverages)) {
     echo "
+                    <form action='testOrderPage.php' method='post' target='_top'>
+                    <input type='hidden' name='itemID' value=" . $row[0] . ">
+                    <input type='hidden' name='price' value=" . $row[2] . ">
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -261,27 +286,31 @@ for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch
                     <tr>
                         <td class='col_orderPageNum'> </td>
                         <td class='col_itemName'>
-                            <button type='button'>Add to Cart</button>
+                            <input type='submit' name='add' value='Add to Cart'>
+                            <input type='submit' name='remove' value='Remove All'>
                         </td>
-                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_description'>$" . $row[2] . "</td>    
                         <td class='col_quantity'>
-                            <input type='number' name='quantity' min='1' max='10'>
+                            <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
                         <td class='col_rating'>*****</td>    
 
                     </tr>                
                 </table>
+                </form>
                 <hr class='orderPageItemDivider'> ";
-    $i++;
 }
 
 echo "</div>";
 
 //Starting DessertList
 
-echo "<div id='dessertList'>";
+echo "<div id='dessertList'>Dessert";
 for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
     echo "
+                    <form action='testOrderPage.php' method='post' target='_top'>
+                    <input type='hidden' name='itemID' value=" . $row[0] . ">
+                    <input type='hidden' name='price' value=" . $row[2] . ">
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -293,18 +322,19 @@ for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_r
                     <tr>
                         <td class='col_orderPageNum'> </td>
                         <td class='col_itemName'>
-                            <button type='button'>Add to Cart</button>
+                            <input type='submit' name='add' value='Add to Cart'>
+                            <input type='submit' name='remove' value='Remove All'>
                         </td>
-                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_description'>$" . $row[2] . "</td>    
                         <td class='col_quantity'>
-                            <input type='number' name='quantity' min='1' max='10'>
+                            <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
                         <td class='col_rating'>*****</td>    
 
                     </tr>                
                 </table>
+                </form>
                 <hr class='orderPageItemDivider'> ";
-    $i++;
 }
 
 echo "</div>";
