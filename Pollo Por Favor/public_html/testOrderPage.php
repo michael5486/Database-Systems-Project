@@ -10,20 +10,8 @@ $ses_sides = mysqli_query($con, "select * from menu_items where food_type = 'Sid
 $ses_beverages = mysqli_query($con, "select * from menu_items where food_type = 'Beverage'; ");
 $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'Dessert'; ");
 
-$updateCartCost = mysqli_query($con, "SELECT menu_items.item_price
-    FROM `menu_items`
-    INNER JOIN order_items
-    ON menu_items.item_ID=order_items.item_ID;"); //ticket_num will increment with each new order
-
-
-
-$subtotal = 0.00;
-$tax_multiplier = 0.0575; //sales tax for DC
-//$total_tax = 0.00;
-//$totalPrice = 0.00;
-
 $ticket_num = 1;
-global $ticket_num, $subtotal, $tax_multiplier, $total_tax, $totalPrice; //makes global variables
+global $ticket_num; //makes global variables
 ?>
 
 <?php
@@ -62,19 +50,28 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
         }
     }
 
+    $subtotal = 0.00;
+    $tax_multiplier = 0.0575; //sales tax for DC
+
+    $updateCartCost = mysqli_query($con, "SELECT menu_items.item_price
+    FROM `menu_items`
+    INNER JOIN order_items
+    ON menu_items.item_ID=order_items.item_ID;"); //ticket_num will increment with each new order
+    
     for ($row = mysqli_fetch_row($updateCartCost); $row != false; $row = mysqli_fetch_row($updateCartCost)) {
         $subtotal += $row[0]; //adds cost to subtotal
         echo "Subtotal: " . $subtotal;
     }
     echo "<br>";
+
+    $total_tax = $subtotal * $tax_multiplier;
+
+    $totalPrice = $total_tax + $subtotal;
+
+    global $subtotal, $total_tax, $totalPrice;
+
+    echo "totalPrice: " . $totalPrice . "<br>";
 }
-
-$total_tax = $subtotal * $tax_multiplier;
-
-$totalPrice = $total_tax + $subtotal;
-
-echo "totalPrice: " . $totalPrice . "<br>";
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
