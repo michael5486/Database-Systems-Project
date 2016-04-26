@@ -1,9 +1,16 @@
+<?php
+include('config.php');
+
+$totalPrice;
+global $totalPrice;
+
+if (isset($_POST["totalPrice"]) && isset($_POST["tip"])) {
+
+    $totalPrice = $_POST["totalPrice"] + $_POST["tip"];
+}
+?>
+
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -32,7 +39,8 @@ and open the template in the editor.
             <br>
         </div>
     </head>
-    <body>
-        <div>Order was successful</div>
-    </body>
+<body>
+    <br>
+    <h1>Order was successful. Total Cost: $<?php echo round($totalPrice, 2) ?></h1>
+</body>
 </html>
