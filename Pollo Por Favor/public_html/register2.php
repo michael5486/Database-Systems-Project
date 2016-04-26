@@ -11,6 +11,10 @@ if(isset($_SESSION['username'])!="")
  
 if(isset($_POST['submit']))
 {
+<<<<<<< HEAD
+=======
+    //$sql = "INSERT INTO address (city, state, street, username, zip_code) VALUES ('".$_POST["city"]."','".$_POST["state"]."','".$_POST["street"]."','".$_POST["username"]."','".$_POST["zip_code"]."')";
+>>>>>>> 225f884091b876b7252cd7cf17bcaf4e6d99fb33
     $sql = "INSERT INTO user (username, password) VALUES ('".$_POST["username"]."','".$_POST["password"]."')";
     if (mysqli_query($con, $sql)) 
   {
