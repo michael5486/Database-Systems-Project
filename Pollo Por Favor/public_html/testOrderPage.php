@@ -9,72 +9,132 @@ $ses_dinner = mysqli_query($con, "select * from menu_items where food_type = 'Di
 $ses_sides = mysqli_query($con, "select * from menu_items where food_type = 'Side' ");
 $ses_beverages = mysqli_query($con, "select * from menu_items where food_type = 'Beverage' ");
 $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'Dessert' ");
+
+
+
+$subtotal = 0;
+//global $subtotal; //makes subtotal a global variable
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en">
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-        <script src="orderPage.js"></script>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Order Now</title>
-        <link rel="stylesheet" type="text/css" href="css/orderPage.css">
-    </head>
-    <body>
-        <div id="header">
-            <table class="header_table">
-                <tr>
-                    <td class="col_header_logo"> 
-                        <a href="index.html">
-                            <img src="pix/PPF_logo.png" alt="Pollo Por Favor logo" width="80" height="80">
-                        </a>
-                    </td>
-                    <td class="col_header_address">
-                        <p>2140 L Street, NW
-                            <br>
-                            Washington, DC 20037<p>        
-                    </td>
-                    <td class="col_header_username">
-                        <p>Username</p>
-                    </td>
-                </tr>
-            </table>
-            <br>
-        </div>
+<?php
+if (isset($_POST)) {
+    $id = $_POST["itemID"];
+    echo "<p>Item ID: ".$id."<br>";
+    
+    Quantity:
+    $quantity = $_POST["quantity"];
+    echo "<p>Quantity: ".$quantity."<br>";
 
-        <div id="wrapper">
-            <div id="main">
-                <!---<table>
+    $price = $_POST["price"];
+    echo "<p>Price:".($price * $quantity)."<br>";
+    $subtotal += ($price * $quantity);
+    
+    $sql = "INSERT into order_items(item_ID, ticket_num) VALUES (".$id.", ".$_POST"
+
+   
+    }
+    ?>
+
+    <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+    <html lang="en">
+        <head>
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+            <script src="orderPage.js"></script>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+            <title>Order Now</title>
+            <link rel="stylesheet" type="text/css" href="css/orderPage.css">
+        </head>
+        <body>
+            <div id="header">
+                <table class="header_table">
                     <tr>
-                        <td class="col_orderPageNum">1. </td>
-                        <td class="col_itemName">Item Name</td>    
-                        <td class="col_description">Description</td>    
-                        <td class="col_quantity">Quantity</td>    
-                        <td class="col_rating">Rating</td>                       
+                        <td class="col_header_logo"> 
+                            <a href="index.html">
+                                <img src="pix/PPF_logo.png" alt="Pollo Por Favor logo" width="80" height="80">
+                            </a>
+                        </td>
+                        <td class="col_header_address">
+                            <p>2140 L Street, NW
+                                <br>
+                                Washington, DC 20037<p>        
+                        </td>
+                        <td class="col_header_username">
+                            <p>Username</p>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+            </div>
+
+            <div id="wrapper">
+                <div id="main">
+                    <!---<table>
+                        <tr>
+                            <td class="col_orderPageNum">1. </td>
+                            <td class="col_itemName">Item Name</td>    
+                            <td class="col_description">Description</td>    
+                            <td class="col_quantity">Quantity</td>    
+                            <td class="col_rating">Rating</td>                       
+                        </tr>
+                        <tr>
+                            <td class="col_orderPageNum"> </td>
+                            <td class="col_itemName">
+                                <button type="button">Add to Cart</button> 
+                            </td>
+                            <td class="col_description">Price</td>    
+                            <td class="col_quantity">
+                                <input type="number" name="quantity" min="1" max="10">
+                            </td>    
+                            <td class="col_rating">*****</td>    
+
+                        </tr>                
+                    </table>
+                    <hr class="orderPageItemDivider">--->
+
+                    <?php
+                    //Starting Breakfast List----------
+
+                    echo "<div id='breakfastList'>";
+                    // $i = 1;
+                    for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch_row($ses_breakfast)) {
+
+                        echo "
+                        <form action='testOrderPage.php' method='post' target='_top'>
+                        <input type='hidden' name='itemID' value=" . $row[0] . ">
+                        <input type='hidden' name='price' value=" . $row[2] . ">    
+                    <table>
+                    <tr>
+                         <td class='col_orderPageNum'>" . $row[0] . "</td>
+                         <td class='col_itemName'>" . $row[1] . "</td> 
+                         <td class='col_description'>" . $row[4] . "</td> 
+                         <td class='col_quantity'>Quantity</td>
+                         <td class='col_rating'>Rating</td>                     
                     </tr>
                     <tr>
-                        <td class="col_orderPageNum"> </td>
-                        <td class="col_itemName">
-                            <button type="button">Add to Cart</button> 
+                        <td class='col_orderPageNum'> </td>
+                        <td class='col_itemName'>
+                            <input type='submit' value='Add to Cart'>
                         </td>
-                        <td class="col_description">Price</td>    
-                        <td class="col_quantity">
-                            <input type="number" name="quantity" min="1" max="10">
+                        <td class='col_description'>" . $row[2] . "</td>    
+                        <td class='col_quantity'>
+                            <input type='number' name='quantity' min='1' max='10'>
                         </td>    
-                        <td class="col_rating">*****</td>    
+                        <td class='col_rating'>*****</td>    
 
                     </tr>                
                 </table>
-                <hr class="orderPageItemDivider">--->
+                </form>
+                <hr class='orderPageItemDivider'> ";
+                        $i++;
+                    }
 
-                <?php
-                //Starting Breakfast List----------
+                    echo "</div>";
 
-                echo "<div id='breakfastList'>";
-               // $i = 1;
-                for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch_row($ses_breakfast)) {
+                    //Starting LunchList----------
 
-                    echo "
+                    echo "<div id='lunchList'>";
+                    for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row($ses_lunch)) {
+                        echo "
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -97,16 +157,16 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
                     </tr>                
                 </table>
                 <hr class='orderPageItemDivider'> ";
-                    $i++;
-                }
+                        $i++;
+                    }
 
-                echo "</div>";
+                    echo "</div>";
 
-                //Starting LunchList----------
+                    //Starting DinnerList------------
 
-                echo "<div id='lunchList'>";
-                for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row($ses_lunch)) {
-                    echo "
+                    echo "<div id='dinnerList'>";
+                    for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_row($ses_dinner)) {
+                        echo "
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -129,16 +189,16 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
                     </tr>                
                 </table>
                 <hr class='orderPageItemDivider'> ";
-                    $i++;
-                }
+                        $i++;
+                    }
 
-                echo "</div>";
-                
-               //Starting DinnerList------------
-                
-                echo "<div id='dinnerList'>";
-                for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_row($ses_dinner)) {
-                    echo "
+                    echo "</div>";
+
+                    //Starting SidesList----------
+
+                    echo "<div id='sidesList'>";
+                    for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row($ses_sides)) {
+                        echo "
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -161,16 +221,16 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
                     </tr>                
                 </table>
                 <hr class='orderPageItemDivider'> ";
-                    $i++;
-                }
+                        $i++;
+                    }
 
-                echo "</div>";                
+                    echo "</div>";
 
-               //Starting SidesList----------
-                
-                echo "<div id='sidesList'>";
-                for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row($ses_sides)) {
-                    echo "
+                    //Starting BeveragesList-------------
+
+                    echo "<div id='beveragesList'>";
+                    for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch_row($ses_beverages)) {
+                        echo "
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -193,16 +253,16 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
                     </tr>                
                 </table>
                 <hr class='orderPageItemDivider'> ";
-                    $i++;
-                }
+                        $i++;
+                    }
 
-                echo "</div>";
+                    echo "</div>";
 
-               //Starting BeveragesList-------------
-                
-                echo "<div id='beveragesList'>";
-                for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch_row($ses_beverages)) {
-                    echo "
+                    //Starting DessertList
+
+                    echo "<div id='dessertList'>";
+                    for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
+                        echo "
                     <table>
                     <tr>
                          <td class='col_orderPageNum'>" . $row[0] . "</td>
@@ -225,43 +285,11 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
                     </tr>                
                 </table>
                 <hr class='orderPageItemDivider'> ";
-                    $i++;
-                }
+                        $i++;
+                    }
 
-                echo "</div>";                
-                
-                //Starting DessertList
-
-                echo "<div id='dessertList'>";
-                for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
-                    echo "
-                    <table>
-                    <tr>
-                         <td class='col_orderPageNum'>" . $row[0] . "</td>
-                         <td class='col_itemName'>" . $row[1] . "</td> 
-                         <td class='col_description'>" . $row[4] . "</td> 
-                         <td class='col_quantity'>Quantity</td>
-                         <td class='col_rating'>Rating</td>                     
-                    </tr>
-                    <tr>
-                        <td class='col_orderPageNum'> </td>
-                        <td class='col_itemName'>
-                            <button type='button'>Add to Cart</button>
-                        </td>
-                        <td class='col_description'>" . $row[2] . "</td>    
-                        <td class='col_quantity'>
-                            <input type='number' name='quantity' min='1' max='10'>
-                        </td>    
-                        <td class='col_rating'>*****</td>    
-
-                    </tr>                
-                </table>
-                <hr class='orderPageItemDivider'> ";
-                    $i++;
-                }
-
-                echo "</div>";
-                ?>
+                    echo "</div>";
+                    ?>
 
             </div>
 
@@ -269,7 +297,7 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
             <div id="sidebar">
                 <div id="cart">
                     <p>Your Cart</p>
-                    <p>Subtotal: $0.00</p>
+                    <p>Subtotal: <?php echo $subtotal; ?></p>
                     <p>Tax: $0.00
                     <p>Tip: <input type="number" step="0.01" min="0">
                     </p>   
