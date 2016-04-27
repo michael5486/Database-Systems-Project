@@ -368,7 +368,7 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                             $_SESSION['tax'] = $total_tax; //tax
                             
                             
-                            //for Alison
+                            /*//for Alison
                             $order_cost = $_SESSION["order_cost"];
                             $special_instructions = $_POST["special_instructions"];
                             $ticket_num = $_SESSION["ticket_num"];
@@ -379,7 +379,7 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                             $insertOrderInfo = "INSERT INTO `order_info`(`order_cost`, `special_instructions`, `ticket_num`, `tip`, 
                                 `total_cost`, `tax`) VALUES (".$order_cost.",".$special_instructions.",".
                                     $ticket_num.",".$tip.",".$totalPrice.",".$tax.");";
-
+*/
                         ?>
                         <input type='hidden' name='totalPrice' value='<?php echo $totalPrice ?>'>
                         <input type="submit" value="Checkout"> 
