@@ -165,7 +165,7 @@
 					
                     <tr>
                          <td class='col_itemName'>" . $row[1] . "</td> 
-						 <td class='col_rating'>" . $rating[$i] . "</td>   
+						 <td class='col_rating'>" . round($rating[$i], 1) . "</td>   
                          <td class='col_quantity'>
                             <input type='number' name='quantity' step='0.5' min='1' max='5' >
 							<input type='submit' name='add'  value='Rate Item'>
