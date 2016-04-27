@@ -277,7 +277,7 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
                     <p>Total: $100.00
                         <br>
                         <br>
-                        <button href=paymentPage.php accesskey="7" type="button">Checkout</button> 
+                        <a href="paymentPage.php" accesskey="7" class="button" >Checkout</a> 
 
 
                     <hr class="cartRatingsDivider">
