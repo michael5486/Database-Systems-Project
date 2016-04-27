@@ -3,12 +3,6 @@ include('config.php');
 
 session_start();
 
-//$ses_sql = mysqli_query($con, "select username from user where username = '" . $_SESSION["username"] . "' ");
-
-//$row = mysqli_fetch_array($ses_sql, MYSQLI_ASSOC);
-
-//$login_session = $row['username'];
-
 if (isset($_SESSION['username'])) { //is a user is in a session
     echo "Username: " .$_SESSION['username']."<br>";
     echo "ticket_num " .$_SESSION['ticket_num']."<br>";
@@ -21,9 +15,6 @@ if (isset($_SESSION['username'])) { //is a user is in a session
 else { //user isn't in a session...go back to login page
     header("location:login2.php");
 }
-
-
-
 
 $ses_breakfast = mysqli_query($con, "select * from menu_items where food_type = 'Breakfast'; ");
 $ses_lunch = mysqli_query($con, "select * from menu_items where food_type = 'Lunch'; ");
@@ -361,13 +352,35 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                     <p>Your Cart</p>
                     <p>Subtotal: $<?php echo $subtotal; ?></p>
                     <p>Tax: $<?php echo round($total_tax, 2); ?></p>
-                    <form action='orderSuccessful.php' method='post' target='_blank'>
+                    <form action='officialPaymentPage.php' method='post' target='_blank'>
                         <p>Tip: 
                             <input type="number" step="0.01" min="0" name='tip'> 
                         </p>
                         <hr class="subtotalDivider">
 
-                        Total: $<?php echo round($totalPrice, 2); ?></p>
+                        Total: $<?php 
+                        echo round($totalPrice, 2); 
+                            $_SESSION['order_cost'] = $subtotal;
+                            //special instructions in next one
+                            //ticket_num is in session
+                            //tip is a post
+                            $_SESSION['totalPrice'] = $totalPrice; //order_cost
+                            $_SESSION['tax'] = $total_tax; //tax
+                            
+                            
+                            //for Alison
+                            $order_cost = $_SESSION["order_cost"];
+                            $special_instructions = $_POST["special_instructions"];
+                            $ticket_num = $_SESSION["ticket_num"];
+                            $tip = $_POST["tip"];
+                            $totalPrice = $_SESSION["totalPrice"];
+                            $tax = $_SESSION["tax"];
+                            
+                            $insertOrderInfo = "INSERT INTO `order_info`(`order_cost`, `special_instructions`, `ticket_num`, `tip`, 
+                                `total_cost`, `tax`) VALUES (".$order_cost.",".$special_instructions.",".
+                                    $ticket_num.",".$tip.",".$totalPrice.",".$tax.");";
+
+                        ?>
                         <input type='hidden' name='totalPrice' value='<?php echo $totalPrice ?>'>
                         <input type="submit" value="Checkout"> 
                     </form>
