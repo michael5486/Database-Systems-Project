@@ -1,6 +1,18 @@
 <?php
 include('config.php');
 
+//session_start();
+//
+//   $ses_sql = mysqli_query($con,"select username from user where username = '".$_SESSION["username"]."' ");
+//   
+//   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
+//   
+//   $login_session = $row['username'];
+//   
+//   if(!isset($_SESSION['username'])){
+//      header("location:login2.php");
+//   }
+
 $totalPrice;
 global $totalPrice;
 
@@ -10,12 +22,6 @@ if (isset($_POST["totalPrice"]) && isset($_POST["tip"])) {
 }
 ?>
 
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 
 <html>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
@@ -82,7 +88,7 @@ and open the template in the editor.
                             Washington, DC 20037<p>        
                     </td>
                     <td class="col_header_username">
-                        <p>Welcome, <?php echo $login_session; ?></p>
+<!--                        <p>Welcome, <?php echo $login_session; ?></p>-->
                         <br>
                         <a href="logout.php"><button type="button">Sign Out</button></a>
 

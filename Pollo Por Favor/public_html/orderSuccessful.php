@@ -42,5 +42,6 @@ if (isset($_POST["totalPrice"]) && isset($_POST["tip"])) {
 <body>
     <br>
     <h1>Order was successful. Total Cost: $<?php echo round($totalPrice, 2) ?></h1>
+    <h1>Your order will arrive in approximately 30 minutes.</h1>
 </body>
 </html>
