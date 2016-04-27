@@ -135,8 +135,16 @@
 <body>
     <div id="wrapper">
         <div id="main">
-			<h1>Order was successful. Total Cost: $<?php echo round($totalPrice, 2) ?></h1> <br>
-			
+			<h1>Order was successful. Total Cost: $<?php echo round($totalPrice, 2) ?></h1>
+                        <h1>Your food will arrive in approximately 30 minutes</h1>
+                        <?php
+                        $sql3 = "SELECT driver_name FROM driver ORDER BY RAND() LIMIT 1;";
+                        $result = mysqli_query($con, $sql3);
+                        $row1 = mysqli_fetch_row($result);
+                        // output data of each row
+                           echo "<h1>Your driver is ".$row1[0]."</h1>";
+                        
+                        ?>
 			<h2>
 			Please rate your ordered items below: <br>
 			</h2>

@@ -11,5 +11,5 @@ $(document).ready(function () {
     
     $("#American_Express").click(function () {
         $('#drop_button').text('American Express');
-    });    
+    });
 });
