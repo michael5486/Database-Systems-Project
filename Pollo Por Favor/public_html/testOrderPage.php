@@ -3,15 +3,27 @@ include('config.php');
 
 session_start();
 
-   $ses_sql = mysqli_query($con,"select username from user where username = '".$_SESSION["username"]."' ");
-   
-   $row = mysqli_fetch_array($ses_sql,MYSQLI_ASSOC);
-   
-   $login_session = $row['username'];
-   
-   if(!isset($_SESSION['username'])){
-      header("location:login2.php");
-   }
+//$ses_sql = mysqli_query($con, "select username from user where username = '" . $_SESSION["username"] . "' ");
+
+//$row = mysqli_fetch_array($ses_sql, MYSQLI_ASSOC);
+
+//$login_session = $row['username'];
+
+if (isset($_SESSION['username'])) { //is a user is in a session
+    echo "Username: " .$_SESSION['username']."<br>";
+    echo "ticket_num " .$_SESSION['ticket_num']."<br>";
+    
+    $ticket_num = $_SESSION['ticket_num'];
+    $username = $_SESSION['username'];
+    global $ticket_num, $username ; //makes global variables
+
+}
+else { //user isn't in a session...go back to login page
+    header("location:login2.php");
+}
+
+
+
 
 $ses_breakfast = mysqli_query($con, "select * from menu_items where food_type = 'Breakfast'; ");
 $ses_lunch = mysqli_query($con, "select * from menu_items where food_type = 'Lunch'; ");
@@ -20,8 +32,6 @@ $ses_sides = mysqli_query($con, "select * from menu_items where food_type = 'Sid
 $ses_beverages = mysqli_query($con, "select * from menu_items where food_type = 'Beverage'; ");
 $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'Dessert'; ");
 
-$ticket_num = 1;
-global $ticket_num; //makes global variables
 ?>
 
 <?php
@@ -40,7 +50,7 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
 
     if (isset($_POST["add"])) {
         for ($i = 0; $i < $quantity; $i++) { //inserts proper quantity of items
-            $insertItems = "INSERT into order_items(item_ID, ticket_num) VALUES (" . $id . ", " . 4 . ");";
+            $insertItems = "INSERT into order_items(item_ID, ticket_num) VALUES (" . $id . ", " . $ticket_num . ");";
             if (mysqli_query($con, $insertItems)) {
                 //do nothing
             } else {
@@ -50,9 +60,9 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
     }
 
     if (isset($_POST["remove"])) {
-        echo "DELETE FROM `order_items` WHERE item_id = " . $_POST["itemID"] . " AND ticket_num = 4; <br>";
+        echo "DELETE FROM `order_items` WHERE item_id = " . $_POST["itemID"] . " AND ticket_num = " . $ticket_num . "; <br>";
 
-        $deleteItems = mysqli_query($con, "DELETE FROM `order_items` WHERE item_id = " . $_POST["itemID"] . " AND ticket_num = 4;");
+        $deleteItems = mysqli_query($con, "DELETE FROM `order_items` WHERE item_id = " . $_POST["itemID"] . " AND ticket_num = " . $ticket_num . ";");
         if (mysqli_query($con, $deleteItems)) {
             //do nothing
         } else {
@@ -63,12 +73,15 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
     $subtotal = 0.00;
     $tax_multiplier = 0.0575; //sales tax for DC
 
+    echo "ticket_num before subtotal: ".$ticket_num;
     $updateCartCost = mysqli_query($con, "SELECT menu_items.item_price
     FROM `menu_items`
     INNER JOIN order_items
-    ON menu_items.item_ID=order_items.item_ID;"); //ticket_num will increment with each new order
-    
-    for ($row = mysqli_fetch_row($updateCartCost); $row != false; $row = mysqli_fetch_row($updateCartCost)) {
+    ON menu_items.item_ID=order_items.item_ID
+    WHERE order_items.ticket_num = " . $ticket_num . ";"); //ticket_num will increment with each new order
+
+    for ($row = mysqli_fetch_array($updateCartCost); $row != false; $row = mysqli_fetch_row($updateCartCost)) {
+        //echo $row[0]."<br>";
         $subtotal += $row[0]; //adds cost to subtotal
         echo "Subtotal: " . $subtotal;
     }
@@ -108,7 +121,7 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                             Washington, DC 20037<p>        
                     </td>
                     <td class="col_header_username">
-                        <p>Welcome, <?php echo $login_session; ?></p>
+                        <p>Welcome, <?php echo $username; ?></p>
                         <br>
                         <a href="logout.php"><button type="button">Sign Out</button></a>
                     </td>
@@ -121,13 +134,13 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
             <div id="main">
 
 
-<?php
+                <?php
 //Starting Breakfast List----------
 
-echo "<div id='breakfastList'>Breakfast";
-for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch_row($ses_breakfast)) {
+                echo "<div id='breakfastList'>Breakfast";
+                for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch_row($ses_breakfast)) {
 
-    echo "
+                    echo "
                     <form action='testOrderPage.php' method='post' target='_top'>
                     <input type='hidden' name='itemID' value=" . $row[0] . ">
                     <input type='hidden' name='price' value=" . $row[2] . ">
@@ -155,15 +168,15 @@ for ($row = mysqli_fetch_row($ses_breakfast); $row != false; $row = mysqli_fetch
                 </table>
                 </form>
                 <hr class='orderPageItemDivider'> ";
-}
+                }
 
-echo "</div>";
+                echo "</div>";
 
 //Starting LunchList----------
 
-echo "<div id='lunchList'>Lunch";
-for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row($ses_lunch)) {
-    echo "
+                echo "<div id='lunchList'>Lunch";
+                for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row($ses_lunch)) {
+                    echo "
                     <form action='testOrderPage.php' method='post' target='_top'>
                     <input type='hidden' name='itemID' value=" . $row[0] . ">
                     <input type='hidden' name='price' value=" . $row[2] . ">
@@ -191,15 +204,15 @@ for ($row = mysqli_fetch_row($ses_lunch); $row != false; $row = mysqli_fetch_row
                 </table>
                 </form>
                 <hr class='orderPageItemDivider'> ";
-}
+                }
 
-echo "</div>";
+                echo "</div>";
 
 //Starting DinnerList------------
 
-echo "<div id='dinnerList'>Dinner";
-for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_row($ses_dinner)) {
-    echo "
+                echo "<div id='dinnerList'>Dinner";
+                for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_row($ses_dinner)) {
+                    echo "
                     <form action='testOrderPage.php' method='post' target='_top'>
                     <input type='hidden' name='itemID' value=" . $row[0] . ">
                     <input type='hidden' name='price' value=" . $row[2] . ">
@@ -227,15 +240,15 @@ for ($row = mysqli_fetch_row($ses_dinner); $row != false; $row = mysqli_fetch_ro
                 </table>
                 </form>
                 <hr class='orderPageItemDivider'> ";
-}
+                }
 
-echo "</div>";
+                echo "</div>";
 
 //Starting SidesList----------
 
-echo "<div id='sidesList'>Sides";
-for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row($ses_sides)) {
-    echo "
+                echo "<div id='sidesList'>Sides";
+                for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row($ses_sides)) {
+                    echo "
                     <form action='testOrderPage.php' method='post' target='_top'>
                     <input type='hidden' name='itemID' value=" . $row[0] . ">
                     <input type='hidden' name='price' value=" . $row[2] . ">
@@ -263,15 +276,15 @@ for ($row = mysqli_fetch_row($ses_sides); $row != false; $row = mysqli_fetch_row
                 </table>
                 </form>
                 <hr class='orderPageItemDivider'> ";
-}
+                }
 
-echo "</div>";
+                echo "</div>";
 
 //Starting BeveragesList-------------
 
-echo "<div id='beveragesList'>Beverages";
-for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch_row($ses_beverages)) {
-    echo "
+                echo "<div id='beveragesList'>Beverages";
+                for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch_row($ses_beverages)) {
+                    echo "
                     <form action='testOrderPage.php' method='post' target='_top'>
                     <input type='hidden' name='itemID' value=" . $row[0] . ">
                     <input type='hidden' name='price' value=" . $row[2] . ">
@@ -299,15 +312,15 @@ for ($row = mysqli_fetch_row($ses_beverages); $row != false; $row = mysqli_fetch
                 </table>
                 </form>
                 <hr class='orderPageItemDivider'> ";
-}
+                }
 
-echo "</div>";
+                echo "</div>";
 
 //Starting DessertList
 
-echo "<div id='dessertList'>Dessert";
-for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
-    echo "
+                echo "<div id='dessertList'>Dessert";
+                for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_row($ses_dessert)) {
+                    echo "
                     <form action='testOrderPage.php' method='post' target='_top'>
                     <input type='hidden' name='itemID' value=" . $row[0] . ">
                     <input type='hidden' name='price' value=" . $row[2] . ">
@@ -335,10 +348,10 @@ for ($row = mysqli_fetch_row($ses_dessert); $row != false; $row = mysqli_fetch_r
                 </table>
                 </form>
                 <hr class='orderPageItemDivider'> ";
-}
+                }
 
-echo "</div>";
-?>
+                echo "</div>";
+                ?>
 
             </div>
 

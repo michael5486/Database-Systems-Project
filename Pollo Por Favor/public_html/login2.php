@@ -2,39 +2,47 @@
 include("config.php");
 session_start();
 
-if(isset($_SESSION['username'])!="")
-{
-  header("location: testOrderPage.php");
+if (isset($_SESSION['username']) != "") {
+    header("location: testOrderPage.php");
 }
 
-if (mysqli_connect_errno())
-{
-   echo "MySQLi Connection was not established: " . mysqli_connect_error();
+if (mysqli_connect_errno()) {
+    echo "MySQLi Connection was not established: " . mysqli_connect_error();
 }
 
-if(isset($_POST['login']))
-{
-   $username = mysqli_real_escape_string($con,$_POST['username']);
-   $password = mysqli_real_escape_string($con,$_POST['password']);
+if (isset($_POST['login'])) {
+    $username = mysqli_real_escape_string($con, $_POST['username']);
+    $password = mysqli_real_escape_string($con, $_POST['password']);
 
-   $sel_user = "SELECT * FROM user WHERE username='$username' AND password='$password'";
-   $run_user = mysqli_query($con, $sel_user);
+    $sel_user = "SELECT * FROM user WHERE username='$username' AND password='$password'";
+    $run_user = mysqli_query($con, $sel_user);
 
-   $check_user = mysqli_num_rows($run_user);
+    $check_user = mysqli_num_rows($run_user);
 
-   if($check_user>0){
-      $_SESSION['username']=$username;
-      echo "<script>window.open('testOrderPage.php','_self')</script>";
-   }
-   else {
-      echo "<script>alert('Email or password is not correct, try again!')</script>";
-   }
-
+    if ($check_user > 0) {
+        $insertNewOrder = "INSERT INTO `order_history`(`username`) VALUES ('" . $username . "');"; //inserts new record into orderHistory
+        if (mysqli_query($con, $insertNewOrder)) {
+            //do nothing
+        }
+        else { 
+            echo "Error: " . $insertNewOrder . "<br>" . mysqli_error($con);
+        }
+        
+        $ticket_num_query = mysqli_query($con, "SELECT MAX(ticket_num) FROM order_history;"); //retrives the ticket_num of the inserted order
+        $ticket_num_row = mysqli_fetch_array($ticket_num_query);
+        $ticket_num = $ticket_num_row[0]; //returns max ticket_num in database
+        //echo "ticket_num: " . $ticket_num . "<br>";
+        
+        $_SESSION['username'] = $username;
+        $_SESSION['ticket_num'] = $ticket_num;
+        echo "<script>window.open('testOrderPage.php','_self')</script>";
+    } else {
+        echo "<script>alert('Email or password is not correct, try again!')</script>";
+    }
 }
-
 ?>
 
-<!DOCTYPE html><?php session_start();?>
+<!DOCTYPE html><?php session_start(); ?>
 
 
 
@@ -59,12 +67,12 @@ if(isset($_POST['login']))
             </ul>
         </div>
         <div class="login-page">
-		
+
             <div class="form">
                 <form class = "login-form" action="login2.php" method="post">
                     <input type = "text" name = "username" required="required" placeholder="username" class = "box"/><br/>
-					<input type = "password" name = "password" required="required" placeholder="password" class = "box" /><br/>
-					<input type="submit" name="login" value="Login"/><br />
+                    <input type = "password" name = "password" required="required" placeholder="password" class = "box" /><br/>
+                    <input type="submit" name="login" value="Login"/><br />
                     <p class="message">Not registered? <a href="http://52.70.106.129/register2.php">Create an account</a></p>
                 </form>
             </div>
