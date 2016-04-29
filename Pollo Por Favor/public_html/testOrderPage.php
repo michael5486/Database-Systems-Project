@@ -2,10 +2,10 @@
 include('config.php');
 
 session_start();
-
+srand(0);
 if (isset($_SESSION['username'])) { //is a user is in a session
-    echo "Username: " .$_SESSION['username']."<br>";
-    echo "ticket_num " .$_SESSION['ticket_num']."<br>";
+    //echo "Username: " .$_SESSION['username']."<br>";
+    //echo "ticket_num " .$_SESSION['ticket_num']."<br>";
     
     $ticket_num = $_SESSION['ticket_num'];
     $username = $_SESSION['username'];
@@ -29,14 +29,14 @@ $ses_dessert = mysqli_query($con, "select * from menu_items where food_type = 'D
 if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price"]))) {
 
     $id = $_POST["itemID"];
-    echo "<p>Item ID: " . $id . "<br>";
+    //echo "<p>Item ID: " . $id . "<br>";
 
     Quantity:
     $quantity = $_POST["quantity"];
-    echo "<p>Quantity: " . $quantity . "<br>";
+    //echo "<p>Quantity: " . $quantity . "<br>";
 
     $price = $_POST["price"];
-    echo "<p>Price:" . ($price * $quantity) . "<br>";
+    //echo "<p>Price:" . ($price * $quantity) . "<br>";
     //$subtotal += ($price * $quantity);
 
     if (isset($_POST["add"])) {
@@ -45,26 +45,26 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
             if (mysqli_query($con, $insertItems)) {
                 //do nothing
             } else {
-                echo "Error: " . $insertItems . "<br>" . mysqli_error($con);
+                //echo "Error: " . $insertItems . "<br>" . mysqli_error($con);
             }
         }
     }
 
     if (isset($_POST["remove"])) {
-        echo "DELETE FROM `order_items` WHERE item_id = " . $_POST["itemID"] . " AND ticket_num = " . $ticket_num . "; <br>";
+        //echo "DELETE FROM `order_items` WHERE item_id = " . $_POST["itemID"] . " AND ticket_num = " . $ticket_num . "; <br>";
 
         $deleteItems = mysqli_query($con, "DELETE FROM `order_items` WHERE item_id = " . $_POST["itemID"] . " AND ticket_num = " . $ticket_num . ";");
         if (mysqli_query($con, $deleteItems)) {
             //do nothing
         } else {
-            echo "Error: " . $deleteItems . "<br>" . mysqli_error($con);
+            //echo "Error: " . $deleteItems . "<br>" . mysqli_error($con);
         }
     }
 
     $subtotal = 0.00;
     $tax_multiplier = 0.0575; //sales tax for DC
 
-    echo "ticket_num before subtotal: ".$ticket_num;
+    //echo "ticket_num before subtotal: ".$ticket_num;
     $updateCartCost = mysqli_query($con, "SELECT menu_items.item_price
     FROM `menu_items`
     INNER JOIN order_items
@@ -74,9 +74,9 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
     for ($row = mysqli_fetch_array($updateCartCost); $row != false; $row = mysqli_fetch_row($updateCartCost)) {
         //echo $row[0]."<br>";
         $subtotal += $row[0]; //adds cost to subtotal
-        echo "Subtotal: " . $subtotal;
+        //echo "Subtotal: " . $subtotal;
     }
-    echo "<br>";
+    //echo "<br>";
 
     $total_tax = $subtotal * $tax_multiplier;
 
@@ -84,7 +84,7 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
 
     global $subtotal, $total_tax, $totalPrice;
 
-    echo "totalPrice: " . $totalPrice . "<br>";
+    //echo "totalPrice: " . $totalPrice . "<br>";
 }
 ?>
 
@@ -153,8 +153,12 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                         <td class='col_quantity'>
                             <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
-                        <td class='col_rating'>*****</td>    
-
+                        <td class='col_rating'>";                        
+                        $max = rand(1,5);
+                        for ($i = 0; $i < $max; $i++) {
+                            echo "*";
+                        }
+                        echo "</td>  
                     </tr>                
                 </table>
                 </form>
@@ -189,7 +193,12 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                         <td class='col_quantity'>
                             <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
-                        <td class='col_rating'>*****</td>    
+                        <td class='col_rating'>";
+                        $max = rand(1,5);
+                        for ($i = 0; $i < $max; $i++) {
+                            echo "*";
+                        }
+                        echo "</td>    
 
                     </tr>                
                 </table>
@@ -225,7 +234,12 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                         <td class='col_quantity'>
                             <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
-                        <td class='col_rating'>*****</td>    
+                        <td class='col_rating'>";                        
+                            $max = rand(1,5);
+                        for ($i = 0; $i < $max; $i++) {
+                            echo "*";
+                        }
+                        echo "</td>      
 
                     </tr>                
                 </table>
@@ -261,7 +275,12 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                         <td class='col_quantity'>
                             <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
-                        <td class='col_rating'>*****</td>    
+                        <td class='col_rating'>";                        
+                            $max = rand(1,5);
+                        for ($i = 0; $i < $max; $i++) {
+                            echo "*";
+                        }
+                        echo "</td>     
 
                     </tr>                
                 </table>
@@ -297,8 +316,12 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                         <td class='col_quantity'>
                             <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
-                        <td class='col_rating'>*****</td>    
-
+                        <td class='col_rating'>";                        
+                            $max = rand(1,5);
+                        for ($i = 0; $i < $max; $i++) {
+                            echo "*";
+                        }
+                        echo "</td>  
                     </tr>                
                 </table>
                 </form>
@@ -333,8 +356,12 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                         <td class='col_quantity'>
                             <input type='number' name='quantity' min='1' max='10' value='1'>
                         </td>    
-                        <td class='col_rating'>*****</td>    
-
+                        <td class='col_rating'>";                        
+                            $max = rand(1,5);
+                        for ($i = 0; $i < $max; $i++) {
+                            echo "*";
+                        }
+                        echo "</td>  
                     </tr>                
                 </table>
                 </form>
@@ -368,18 +395,6 @@ if ((isset($_POST["itemID"]) && isset($_POST["quantity"]) && isset($_POST["price
                             $_SESSION['tax'] = $total_tax; //tax
                             
                             
-                            /*//for Alison
-                            $order_cost = $_SESSION["order_cost"];
-                            $special_instructions = $_POST["special_instructions"];
-                            $ticket_num = $_SESSION["ticket_num"];
-                            $tip = $_POST["tip"];
-                            $totalPrice = $_SESSION["totalPrice"];
-                            $tax = $_SESSION["tax"];
-                            
-                            $insertOrderInfo = "INSERT INTO `order_info`(`order_cost`, `special_instructions`, `ticket_num`, `tip`, 
-                                `total_cost`, `tax`) VALUES (".$order_cost.",".$special_instructions.",".
-                                    $ticket_num.",".$tip.",".$totalPrice.",".$tax.");";
-*/
                         ?>
                         <input type='hidden' name='totalPrice' value='<?php echo $totalPrice ?>'>
                         <input type="submit" value="Checkout"> 

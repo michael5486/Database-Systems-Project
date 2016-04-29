@@ -5,7 +5,7 @@ session_start();
  
 if(isset($_SESSION['username'])!="")
 {
-  header("location: temp.php");
+  header("location: login2.php");
 }
  
  
@@ -19,7 +19,7 @@ if(isset($_POST['submit']))
     if (mysqli_query($con, $sql))  
   {
         $_SESSION['username'] = $_POST["username"];
-        header("location: login2.php");
+        header("location: logout.php");
     }
     } 
   else
