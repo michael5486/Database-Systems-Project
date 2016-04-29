@@ -1,0 +1,90 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <title>About Us</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="js/jquery-2.2.1.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.js"></script>
+        <link rel="stylesheet" href="css/jquery-ui.css" type="text/css">
+        <link href="css/fonts.css" rel="stylesheet" type="text/css" media="all">
+        <link href="css/default.css" rel="stylesheet" type="text/css" media="all">
+        <link rel="shortcut icon" href="favicon.ico">
+
+        <script type="text/javascript">
+            $(document).ready(function () {
+
+                $("#infolist").accordion({
+                    autoHeight: false
+                });
+                $("h1").click(function () {
+                    $(this).addClass("blue").fadeOut("slow");
+                });
+            });
+        </script>
+
+        <style type="text/css">
+            ul {list-style-type: none}
+            img {padding-right: 20px; float:left}
+            #infolist {width:500px}
+        </style>
+    </head>
+    <body>
+        <div id="menu">
+            <ul>
+                <li><a href="index.html" accesskey="1" title="">Home</a></li>
+                <li><a href="menu.pdf" accesskey="2" title="">Menu</a></li>
+                <li class="current_page_item"><a href="#" accesskey="3" title="">About Us</a></li>
+                <li><a href="contact.html" accesskey="4" title="">Contact Us</a></li>
+                <li><a href="login2.php" accesskey="5" title="">Login</a></li>
+            </ul>
+        </div>
+
+        <div id="wrapper2"> 
+            <div id="info" class="container">
+                <p> Pollo Por Favor is committed to a fresh and healthy dining experience for DC students. <br>
+                    Please read up more about GW alums and founders below: <br> <br> </p>
+
+                <div id="infolist">
+
+                    <h3><a href="#">Michael Esposito</a></h3>
+                    <div>
+                        <img src="pix/mesposito.jpg" height="150" width="150" alt="Michael Esposito">
+                        <ul>
+                            <li><h4>CEO</h4></li>
+                            <li><b>phone:</b>(908) 418-1063</li>
+                            <li><b>office:</b>Tompkins 201</li>
+                            <li><b>email:</b>michael@polloporfavor.com</li>
+                        </ul>
+                        <br clear="all">
+                    </div>
+
+                    <h3><a href="#">Paul Stoner</a></h3>
+                    <div>
+                        <img src="pix/paul.jpeg" height = "170" width="135" alt="Paul Stoner">
+                        <ul>
+                            <li><h4>Middle Manager</h4></li>
+                            <li><b>phone:</b> (908) 303-6133</li>
+                            <li><b>office:</b> Tompkins 202</li>
+                            <li><b>email:</b>paul@polloporfavor.com</li>
+                        </ul>
+                        <br clear="all">
+                    </div>
+
+                    <h3><a href="#">Alison Below</a></h3>
+                    <div>
+                        <img src="pix/ali.jpg" alt="Sam Jackson">
+                        <ul>
+                            <li><h4>Business Development</h4></li>
+                            <li><b>phone:</b> (203) 815-8800</li>
+                            <li><b>office:</b> Tompkins 203</li>
+                            <li><b>email:</b> ali@polloporfavor.com</li>
+                        </ul>
+                        <br clear="all">
+                    </div>
+
+                </div>
+            </div>
+
+        </div>    
+    </body>
+</html>
